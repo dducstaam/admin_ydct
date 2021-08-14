@@ -1,0 +1,22 @@
+.container {
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #aaaaaa;
+      margin-bottom: 0;
+      @media (max-width: 767px) {
+        padding: 0 20px;
+      }
+    }
+  }
+  
+  .filter {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+}

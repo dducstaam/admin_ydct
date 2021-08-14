@@ -1,0 +1,190 @@
+.container {
+  border: solid 1px #dfdfe0;
+  background-color: #ffffff;
+  border-radius: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .actions {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .btn {
+      width: 210px;
+      height: 40px;
+      border-radius: 23px;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .plusIcon {
+        width: 20px;
+        margin-right: 12px;
+      }
+
+      &:hover {
+        background-color: #c91e33;
+        color: #ffffff;
+        .plusIcon {
+          color: #ffffff;
+        }
+      }
+    }
+    
+  }
+  &:hover {
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+    .actions {
+      display: flex;
+    }
+  }
+  .imageWrapper {
+    height: 220px;
+    position: relative;
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 5px 5px 0 0;
+    }
+  }
+
+  .content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    .productName {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 11px;
+      // min-height: 60px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .starIcon {
+      width: 16px;
+    }
+    .rating {
+      margin-bottom: 0;
+      margin: 0 7px 0 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #c91e33;
+    }
+    .numberReviews {
+      margin-bottom: 0;
+      font-size: 13px;
+      text-decoration: underline;
+    }
+    .text {
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 7px;
+    }
+    .rowBetween {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 15px;
+      .left {
+        display: flex;
+        align-items: flex-end;
+      }
+      .currentPrice {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #c91e33;
+        margin-right: 10px;
+      }
+      .oldPrice {
+        font-size: 16px;
+        font-weight: 500;
+        color: #4c5057;
+        text-decoration: line-through;
+        margin-bottom: 0;
+      }
+      .genuine {
+        border-radius: 13px;
+        border: solid 1px #00c8ab;
+        height: 26px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        color: #11be9a;
+        .verifyed {
+          width: 16px;
+          margin-right: 5px;
+        }
+      }
+
+      .btnViewDetail {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+
+      .address {
+        margin-bottom: 0;
+        font-size: 16px;
+      }
+    }
+
+
+  }
+
+  @media (max-width: 767px) {
+    position: relative;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+    .imageWrapper {
+      height: 140px;
+    } 
+    .content {
+      padding: 10px 15px;
+      .productName {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .text {
+        font-size: 13px;
+        line-height: 15px;
+        margin-bottom: 5px;
+      }
+      
+      .rowBetween {
+        .left {
+          justify-content: space-between;
+        }
+        .oldPrice {
+          font-size: 14px;
+        }
+        .genuine {
+          position: absolute;
+          left: 15px;
+          top: 105px;
+          background-color: #ffffff;
+          border: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="No_cars" width="350" height="127" viewBox="0 0 350 127">
+    <defs>
+        <style>
+            .cls-6{fill:none}.cls-3{stroke:#6e7580;stroke-width:3px;fill:#fff}.cls-5{stroke:none}
+        </style>
+    </defs>
+    <path id="Rectangle_6823" fill="#d7d8d9" d="M0 0H350V2H0z" transform="translate(0 125)"/>
+    <g id="Rectangle_6824" fill="none" stroke="#6e7580" stroke-width="3px">
+        <path d="M0 0H10V30H0z" class="cls-5" transform="translate(170 95)"/>
+        <path d="M1.5 1.5H8.5V28.5H1.5z" class="cls-6" transform="translate(170 95)"/>
+    </g>
+    <g id="Rectangle_6822" class="cls-3" transform="translate(145 5)">
+        <rect width="60" height="90" class="cls-5" rx="5"/>
+        <rect width="57" height="87" x="1.5" y="1.5" class="cls-6" rx="3.5"/>
+    </g>
+    <g id="Ellipse_784" class="cls-3" transform="translate(160 35)">
+        <circle cx="15" cy="15" r="15" class="cls-5"/>
+        <circle cx="15" cy="15" r="13.5" class="cls-6"/>
+    </g>
+    <g id="Ellipse_785" class="cls-3" transform="translate(160 70)">
+        <circle cx="15" cy="15" r="15" class="cls-5"/>
+        <circle cx="15" cy="15" r="13.5" class="cls-6"/>
+    </g>
+    <circle id="Ellipse_783" cx="15" cy="15" r="15" fill="#c91e33" transform="translate(160)"/>
+</svg>

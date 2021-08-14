@@ -1,0 +1,86 @@
+.container {
+  background-color: #f1f4f6;
+  .backdrop {
+    z-index: 100;
+  }
+  .header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background-color: #f7f9fb;
+    left: 0;
+    width: 100%;
+    @media (max-width: 1024px) {
+      width: 100%;
+      transform: translate3d(0, 0, 0) !important;
+    }
+  }
+  // .headerCollapse {
+  // }
+  .content {
+    padding-top: 0px;
+    .sideBar {
+      height: calc(100vh);
+      overflow-y: auto;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 281px;
+      z-index: 96;
+      padding-top: 62px;
+    }
+    .sideBarCollapseWrapper {
+      width: 80px;
+      &:hover {
+        width: 281px;
+      }
+    }
+    .main {
+      // padding-left: 281px;
+      min-height: calc(100vh);
+      padding: 90px 20px 30px 20px;
+      overflow: hidden;
+      @media (max-width: 1024px) {
+        width: 100% !important;
+        transform: translate3d(0, 0px, 0px) !important;
+      }
+    }
+    .showMenu {
+      width: calc(100% - 281px);
+      transform: translate3d(281px, 0px, 0px);
+      transition: all 0.5s ease 0s;
+    }
+    .showMenuCollapse {
+      width: calc(100% - 80px);
+      transform: translate3d(80px, 0px, 0px) !important;
+      transition: all 0.5s ease 0s;
+    }
+    .noTransition {
+      transition: none !important;
+    }
+
+    @media (max-width: 767px) {
+      .sideBar {
+        display: none;
+      }
+      .main {
+        padding-left: 0;
+        padding: 80px 0 40px 0;
+      }
+    }
+  }
+
+  .sideBarMobile {
+    display: block;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .sideBarShow {
+    @media(max-width: 1024px) {
+      z-index: 101;
+    }
+  }
+}

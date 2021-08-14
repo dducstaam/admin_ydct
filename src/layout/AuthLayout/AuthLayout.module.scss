@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  .left {
+    flex: 1;
+    min-width: 500px;
+    height: 100vh;
+    background-image: url('../../images/register-banner.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px 70px 158px 70px;
+    position: relative;
+    .logoWrapper, .bottom {
+      position: relative;
+      z-index: 2;
+      .logo {
+        width: 127px;
+        height: auto;
+      }
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #ffffff;
+      margin-bottom: 40px;
+      max-width: 413px;
+    }
+    .btnBack {
+      font-size: 16px;
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    .background {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.5;
+      background-image: linear-gradient(143deg, #c91e33 -1%, #000000 61%, #000000 127%);
+      z-index: 1;
+    }
+  }
+  .content {
+    flex: 2;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 0 123px 0 115px;
+    .wrapper {
+      .screen {
+        max-width: 500px;
+        margin: 0 auto;
+        padding-top: 120px;
+      }
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 40px;
+      margin-bottom: 74px;
+      .divider {
+        width: 1px;
+        height: 19px;
+        background-color: #6e7580;
+        margin: 0 20px;
+      }
+    }
+    .becomePartner {
+      margin-top: 40px;
+      margin-bottom: 74px;
+      text-align: right;
+      
+    }
+
+    .textLink {
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: underline;
+      color: #000000 !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .left {
+      display: none;
+    }
+    .content {
+      width: 100%;
+      padding: 20px;
+      .becomePartner {
+        margin-bottom: 40px;
+      }
+    }
+  }
+}

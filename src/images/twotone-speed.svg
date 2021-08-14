@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="twotone-speed" width="16" height="16" viewBox="0 0 16 16">
+    <defs>
+        <style>
+            .cls-1{fill:#4c5057}
+        </style>
+    </defs>
+    <path id="Path_4796" d="M14.315 7.072l-.824 1.238a5.355 5.355 0 0 1-.147 5.074H4.066A5.355 5.355 0 0 1 11.1 5.92l1.24-.82a6.694 6.694 0 0 0-9.426 8.957 1.339 1.339 0 0 0 1.151.669h9.272a1.339 1.339 0 0 0 1.165-.669 6.694 6.694 0 0 0-.181-6.989z" class="cls-1" transform="translate(-.672 -1.335)"/>
+    <path id="Path_4797" d="M10.4 12.6a1.339 1.339 0 0 0 1.894 0l3.786-5.68-5.68 3.789a1.339 1.339 0 0 0 0 1.894z" class="cls-1" transform="translate(-3.307 -2.288)"/>
+    <path id="Rectangle_5788" fill="rgba(0,0,0,0)" d="M0 0H16V16H0z"/>
+</svg>

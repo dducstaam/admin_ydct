@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  .option {
+    margin-right: 15px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .search {
+    width: 350px;
+  }
+
+  .select {
+    width: 200px;
+  }
+}

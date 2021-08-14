@@ -1,0 +1,126 @@
+.content {
+}
+.title {
+  font-size: 35px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+.mb40 {
+  margin-bottom: 40px;
+}
+.eye {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+.form {
+}
+.logoWrapper {
+  text-align: center;
+}
+.logo {
+  margin-bottom: 20px;
+  width: 100px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 10px 0 24px 0;
+  a {
+    font-size: 15px;
+    color: #f0f0f0;
+    transition: all 0.3s ease-in-out 0s;
+    text-decoration: none;
+    &:hover {
+      color: #3f6ad8;
+      text-decoration: none;
+    }
+  }
+}
+
+.btnLoginWrapper {
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.registerWrapper {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-top: 30px;
+  .btnRegister {
+    font-weight: 500;
+    text-decoration: underline;
+    margin-left: 6px;
+    color: #000000;
+  }
+}
+
+.otherLogin {
+  font-size: 14px;
+  color: #4c5057;
+  margin-bottom: 20px;
+}
+
+.btnSocial {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #efefef;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  width: 100%;
+  border: 0;
+  transition-property: background-color,border-color,box-shadow;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+  .icon {
+    width: 24px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30px;
+  }
+  &:hover {
+    background-color: rgba(9,30,66,.08);
+  }
+}
+
+.forgotPassword {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  a {
+    color: #000000 !important;
+  }
+}
+
+.link {
+  text-align: center;
+  color: #ffffff;
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.registerNew {
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  .link {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 0;
+    margin-left: 4px;
+  }
+}

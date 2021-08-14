@@ -1,0 +1,22 @@
+.btn {
+  &:hover, &:active, &:visited, &:focus {
+    outline: 0;
+  }
+}
+
+.btn {
+  padding: 0 8px 3px 8px;
+  .refreshIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.eventNone {
+  pointer-events: none;
+}

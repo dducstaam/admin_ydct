@@ -1,0 +1,11 @@
+.btnBack {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  .arrowIcon {
+    width: 16px;
+    margin-right: 12px;
+  }
+}

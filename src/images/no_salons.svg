@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="111.151" viewBox="0 0 400 111.151">
+    <defs>
+        <style>
+            .cls-2,.cls-6{fill:#fff}.cls-2{stroke:#6e7580;stroke-width:3px}.cls-8{fill:none}.cls-7{stroke:none}
+        </style>
+    </defs>
+    <g id="No_salons" transform="translate(0 1.5)">
+        <path id="Rectangle_6823" fill="#d7d8d9" d="M0 0H400V2H0z" transform="translate(0 107.651)"/>
+        <g id="Group_20523" transform="translate(-483 -261.349)">
+            <g id="Group_20522" transform="translate(1.147 9)">
+                <path id="Path_5890" d="M-10253.047-525.349l5.894-10.7L-10227.9-571h56.114" class="cls-2" transform="translate(10873.899 823.349)"/>
+                <path id="Path_5892" d="M-10171.785-525.349l-5.894-10.7-19.254-34.951h-56.114" class="cls-2" transform="translate(10907.899 823.349)"/>
+            </g>
+            <g id="Rectangle_6846" class="cls-2" transform="translate(619 332)">
+                <rect width="19" height="22" class="cls-7" rx="5"/>
+                <rect width="16" height="19" x="1.5" y="1.5" class="cls-8" rx="3.5"/>
+            </g>
+            <g id="Rectangle_6839" fill="none" stroke="#6e7580" stroke-width="3px" transform="translate(589 352)">
+                <rect width="188" height="17" class="cls-7" rx="5"/>
+                <rect width="185" height="14" x="1.5" y="1.5" class="cls-8" rx="3.5"/>
+            </g>
+            <g id="Rectangle_6836" class="cls-2" transform="translate(609 295)">
+                <rect width="141" height="48" class="cls-7" rx="5"/>
+                <rect width="138" height="45" x="1.5" y="1.5" class="cls-8" rx="3.5"/>
+            </g>
+            <g id="Group_20507" transform="translate(11142 852)">
+                <g id="Ellipse_793" class="cls-2" transform="translate(-10508 -542)">
+                    <circle cx="9.5" cy="9.5" r="9.5" class="cls-7"/>
+                    <circle cx="9.5" cy="9.5" r="8" class="cls-8"/>
+                </g>
+                <g id="Ellipse_797" class="cls-2" transform="translate(-10436 -542)">
+                    <circle cx="9.5" cy="9.5" r="9.5" class="cls-7"/>
+                    <circle cx="9.5" cy="9.5" r="8" class="cls-8"/>
+                </g>
+            </g>
+            <g id="Intersection_2" fill="none">
+                <path d="M9.5 0A9.5 9.5 0 0 0 0 9.5q0 .252.013.5h18.974Q19 9.751 19 9.5A9.5 9.5 0 0 0 9.5 0z" class="cls-7" transform="translate(614 278)"/>
+                <path fill="#6e7580" d="M9.5 3c-2.699 0-5.019 1.653-6 4h12c-.981-2.347-3.3-4-6-4m0-3C14.747 0 19 4.253 19 9.5c0 .167-.004.334-.013.5H.013C.004 9.834 0 9.667 0 9.5 0 4.252 4.253 0 9.5 0z" transform="translate(614 278)"/>
+            </g>
+            <rect id="Rectangle_6841" width="45" height="94" fill="#6e7580" rx="5" transform="translate(714 275)"/>
+            <path id="Rectangle_6842" d="M0 0H13V3H0z" class="cls-6" transform="translate(725 300)"/>
+            <path id="Rectangle_6843" d="M0 0H24V3H0z" class="cls-6" transform="translate(725 313)"/>
+            <path id="Rectangle_6844" d="M0 0H24V3H0z" class="cls-6" transform="translate(725 326)"/>
+        </g>
+    </g>
+</svg>
