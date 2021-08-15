@@ -17,7 +17,7 @@ export const useFilter = ({ getData, location, convertQueryToFilter }) => {
 
     setFilter(newFilter);
     getData(params);
-  }, [location.search]);
+  }, [location.search, location.pathname]);
 
   const handleSearch = (values) => {
     const params = qs.parse(location.search, {

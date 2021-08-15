@@ -5,16 +5,29 @@ const Status = (props) => {
   let text;
   let color;
   switch (status) {
-    case 'INACTIVE':
-      text = 'Dừng hoạt động'
+    case 'Unit':
+      text = 'Nháp'
       color = '#ffcf00'
       break
-    case 'ACTIVE':
+    case 'Submit':
+      text = 'Chờ duyệt'
+      color = '#ffcf00'
+      break
+    case 'Approved':
       text = 'Đang hoạt động'
       color = '#318e43'
       break
+    case 'Reject':
+      text = 'Từ chối'
+      color = 'rgb(207, 30, 30)'
+      break
+    case 'Delete':
+    case 'DELETE':
+      text = 'Đã xoá'
+      color = '#999999'
+      break
     default:
-      text = ''
+      text = status
       break
   }
 

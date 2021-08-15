@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import { injectIntl } from 'react-intl'
 import { NavLink } from 'react-router-dom'
 import Expand from 'react-expand-animated';
 import downIcon from 'images/angle-down.svg'
@@ -10,7 +9,6 @@ const ExpandMenus = ({
   screen,
   menu,
   subMenus,
-  intl,
   collapse,
   openMenus,
   handleToggleMenu
@@ -29,7 +27,7 @@ const ExpandMenus = ({
         />
       </div>
 
-      <span>{intl.formatMessage(menu.label)}</span>
+      <span>{menu.label}</span>
       <img
         src={downIcon}
         alt="down"
@@ -51,7 +49,7 @@ const ExpandMenus = ({
                 activeClassName={classes.active}
               >
                 <p className={classes.text}>
-                  {intl.formatMessage(item.label)}
+                  {item.label}
                 </p>
               </NavLink>
               )}
@@ -64,4 +62,4 @@ const ExpandMenus = ({
 
 )
 
-export default injectIntl(ExpandMenus)
+export default ExpandMenus

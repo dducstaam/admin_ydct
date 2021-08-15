@@ -804,13 +804,25 @@ width: auto;
   background-color: #5f6ad8 !important;
 }
 
+.btnSecond {
+  border: 1px solid #3f6ad8 !important;
+  color: #3f6ad8 !important;
+  transition: all 0.3s ease-in-out 0s;
+  position: relative;
+  background-color: #ffffff !important;
+}
+
+.btnSecond:hover {
+  background-color: #f8f8f8 !important;
+}
+
 
 .w100 {
 width: 100%;
 }
 
 .mr20 {
-margin-right: 20px;
+  margin-right: 20px;
 }
 
 .mr10 {

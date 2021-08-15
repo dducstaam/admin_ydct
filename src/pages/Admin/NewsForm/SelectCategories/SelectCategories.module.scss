@@ -1,0 +1,44 @@
+.content {
+  box-shadow: none !important;
+  min-height: 40px;
+  border-radius: 4px;
+  border: solid 1px #BFC7CA;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: #092631;
+  outline: 0;
+  padding: 0 15px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  .loader {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+  }
+
+  .value {
+    padding: 4px 8px;
+    background-color: #f5f5f5;
+    font-size: 12px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    border-radius: 8px;
+  }
+  .btnClose {
+    margin-left: 8px;
+    .closeIcon {
+      width: 16px;
+    }
+  }
+}
+
+.menus {
+  width: 100%;
+}

@@ -6,9 +6,10 @@ const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
-      const firstPath = localStorage.getItem('firstPath')
       if (isLoggedIn()) {
-        return <Redirect to={firstPath || '/'} />
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        const url = userInfo.role === 'Admin' ? '/admin/users' : '/admin/news/waiting-approve'
+        return <Redirect to={url} />
       }
       return <Component {...rest} {...props} />
     }}

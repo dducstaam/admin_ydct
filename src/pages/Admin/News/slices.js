@@ -2,9 +2,10 @@ export const GET_NEWS = 'admin/News/getNews'
 export const GET_NEWS_SUCCESS = 'admin/News/getNewsSuccess'
 export const GET_NEWS_FAILURE = 'admin/News/getNewsFailure'
 
-export const getNews = (params) => ({
+export const getNews = (params, screen) => ({
   type: GET_NEWS,
-  params
+  params,
+  screen
 })
 
 export const getNewsSuccess = (data) => ({

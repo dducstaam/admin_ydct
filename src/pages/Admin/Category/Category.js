@@ -8,6 +8,7 @@ import AdminPage from 'components/AdminPage'
 import { convertSearchParamsToObject, deleteAccents } from 'utils/utils'
 import * as Api from 'api/api'
 import { STATUS_OBJ, STATUS } from 'utils/constants'
+import moment from 'moment'
 import { useInjectReducer } from '../../../utils/injectReducer'
 import { useInjectSaga } from '../../../utils/injectSaga'
 import classes from './Category.module.scss'
@@ -127,12 +128,10 @@ const Users = ({ location }) => {
   const tableOptions = useMemo(() => [{
     name: 'createD_DATE',
     label: 'Ngày tạo',
-  }, {
-    name: 'name',
-    label: 'Tên danh mục',
+    renderCol: (item) => moment(item.createD_DATE).format('DD/MM/YYYY')
   }, {
     name: 'desc',
-    label: 'Mô tả',
+    label: 'Tên danh mục',
   }, {
     name: 'urL_NAME',
     label: 'URL',

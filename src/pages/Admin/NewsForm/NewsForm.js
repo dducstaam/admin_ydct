@@ -1,28 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Field, reduxForm, getFormValues } from 'redux-form'
 import Button from 'components/Button'
 import InputField from 'components/InputField'
 import QuillField from 'components/QuillField'
 import SwitchField from 'components/SwitchField'
-import DropzoneUploadImage from 'components/DropzoneUploadImage'
+import DropzoneUploader from 'components/DropzoneUploader'
 import { createStructuredSelector } from 'reselect'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as Api from 'api/api'
 import SelectField from 'components/SelectField'
 import DatePickerField from 'components/DatePickerField'
+import moment from 'moment'
+import history from 'utils/history'
+import { showNotification } from 'layout/CommonLayout/actions'
 import classes from './NewsForm.module.scss'
+import SelectCategories from './SelectCategories'
 
 const mapStateToProps = createStructuredSelector({
   formState: (state) => getFormValues('NewsForm')(state) || {}
 })
 
-const NewsForm = ({ match, handleSubmit }) => {
+const NewsForm = ({ match, handleSubmit, change }) => {
+  const userInfo = useMemo(() => JSON.parse(localStorage.getItem('userInfo')), [])
+  const formRef = useRef(null)
   const [loadingTypes, setLoadingTypes] = useState(false)
   const [types, setTypes] = useState([])
+  const [detail, setDetail] = useState()
 
   const [loading, setLoading] = useState(false)
 
   const { formState } = useSelector(mapStateToProps)
+
+  const dispatch = useDispatch()
 
   useEffect(async () => {
     try {
@@ -31,6 +40,8 @@ const NewsForm = ({ match, handleSubmit }) => {
       const result = await Api.get({
         url: '/api/Type'
       })
+
+      console.log('result', result)
 
       setTypes(result.map((item) => ({
         ...item,
@@ -44,19 +55,89 @@ const NewsForm = ({ match, handleSubmit }) => {
     }
   }, [])
 
+  useEffect(async () => {
+    try {
+      if (match.params?.id) {
+        const result = await Api.get({
+          url: `/api/News/${match.params?.id}`
+        })
+        change('categories', result.data.categories)
+        change('titlE_CODE', result.data.titlE_CODE)
+        change('title', result.data.title)
+        change('shorT_CONTENT', result.data.shorT_CONTENT)
+        change('contents', result.data.contents)
+        change('issuE_DATE', result.data.issuE_DATE && moment(result.data.issuE_DATE).format('DD/MM/YYYY'))
+        change('iS_HOST', result.data.iS_HOST === 'Y')
+        change('alloW_COMMENT', result.data.alloW_COMMENT === 'Y')
+        change('documentAttacks', result.data.documentAttacks && result.data.documentAttacks.map((item) => ({
+          url: item.documenT_LINK,
+          fileName: item.documenT_NAME
+        })))
+
+        setDetail(result.data)
+      }
+    } catch (e) {
+      return Promise.reject(e)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (detail && types && types.length > 0) {
+      change('typE_ID', types.find((item) => item.value === detail.typE_ID))
+    }
+  }, [detail, types])
+
   const handleSubmitNews = async (values) => {
     try {
       setLoading(true)
-      if (match.id) {
+      if (match.params?.id) {
         await Api.post({
-          url: `/api/News/update/${match.id}`,
-          data: values
+          url: `/api/News/update/${match.params?.id}`,
+          data: {
+            ...values,
+            newS_ID: +match.params?.id,
+            typE_ID: values.typE_ID?.value,
+            documentAttacks: values.documentAttacks && values.documentAttacks.map((item) => ({
+              documenT_LINK: item.url,
+              documenT_NAME: item.fileName
+            })),
+            iS_HOST: values.iS_HOST ? 'Y' : 'N',
+            alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
+            issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
+            status: values.status || 'Submit'
+          }
         })
+        dispatch(showNotification({
+          type: 'SUCCESS',
+          message: 'Cập nhật bài viết thành công'
+        }))
       } else {
         await Api.post({
           url: '/api/News',
-          data: values
+          data: {
+            ...values,
+            typE_ID: values.typE_ID?.value,
+            documentAttacks: values.documentAttacks && values.documentAttacks.map((item) => ({
+              documenT_LINK: item.url,
+              documenT_NAME: item.fileName
+            })),
+            iS_HOST: values.iS_HOST ? 'Y' : 'N',
+            alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
+            issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
+            status: values.status || 'Submit'
+          }
         })
+
+        dispatch(showNotification({
+          type: 'SUCCESS',
+          message: 'Tạo bài viết mới thành công'
+        }))
+      }
+
+      if (values.status === 'Unit') {
+        history.push('/admin/news/draft')
+      } else {
+        history.push('/admin/news/waiting-approve')
       }
 
       setLoading(false)
@@ -69,10 +150,11 @@ const NewsForm = ({ match, handleSubmit }) => {
     <form
       className={classes.container}
       onSubmit={handleSubmit(handleSubmitNews)}
+      ref={formRef}
     >
       <div className="group">
         <div className={classes.header}>
-          { match.id ? 'Cập nhật bài báo' : 'Tạo bài báo' }
+          { match.params?.id ? 'Cập nhật bài báo' : 'Tạo bài báo' }
         </div>
         <div className={classes.content}>
           <Field
@@ -85,9 +167,7 @@ const NewsForm = ({ match, handleSubmit }) => {
           <Field
             name="categories"
             label="Danh mục"
-            component={SelectField}
-            options={types}
-            loading={loadingTypes}
+            component={SelectCategories}
           />
           <Field
             name="titlE_CODE"
@@ -104,11 +184,15 @@ const NewsForm = ({ match, handleSubmit }) => {
             component={QuillField}
             label="Nội dung ngắn"
           />
-          <Field
-            name="contents"
-            component={QuillField}
-            label="Nội dung"
-          />
+          { (formState.typE_ID?.name === 'NEW')
+            && (
+            <Field
+              name="contents"
+              component={QuillField}
+              label="Nội dung"
+            />
+            )}
+
           { (formState.typE_ID?.name === 'DOCUMENT')
             && (
             <Field
@@ -132,21 +216,42 @@ const NewsForm = ({ match, handleSubmit }) => {
             && (
             <Field
               name="documentAttacks"
-              component={DropzoneUploadImage}
+              component={DropzoneUploader}
               label="Tài liệu"
             />
             )}
 
         </div>
-        <div className={classes.actions}>
-          <Button
-            className="btn btnMain btnLarge"
-            type="submit"
-            loading={loading}
-          >
-            { match.id ? 'Cập nhật' : 'Tạo' }
-          </Button>
-        </div>
+        { detail?.status !== 'Approve'
+          && (
+          <div className={classes.actions}>
+            <Button
+              className="btn btnLarge btnSecond mr20"
+              type="submit"
+              loading={loading}
+              onClick={() => {
+                change('status', 'Unit')
+              }}
+            >
+              Lưu nháp
+            </Button>
+            <Button
+              className="btn btnMain btnLarge"
+              type="submit"
+              loading={loading}
+              onClick={() => {
+                if (userInfo.role === 'VietBai') {
+                  change('status', 'Submit')
+                } else {
+                  change('status', 'Approved')
+                }
+              }}
+            >
+              Xuất bản
+            </Button>
+          </div>
+          )}
+
       </div>
 
     </form>
@@ -155,6 +260,14 @@ const NewsForm = ({ match, handleSubmit }) => {
 
 const validate = (values) => {
   const errors = {}
+
+  if (!values.typE_ID) {
+    errors.typE_ID = 'Vui lòng chọn loại bài viết'
+  }
+
+  if (!values.categories) {
+    errors.categories = 'Vui lòng chọn danh mục'
+  }
 
   if (!values.titlE_CODE || !values.titlE_CODE.trim()) {
     errors.titlE_CODE = 'Vui lòng nhập mã bài viết'
@@ -165,10 +278,10 @@ const validate = (values) => {
   }
 
   if (!values.shorT_CONTENT || !values.shorT_CONTENT.trim()) {
-    errors.titlE_CODE = 'Vui lòng nhập nội dung ngắn'
+    errors.shorT_CONTENT = 'Vui lòng nhập nội dung ngắn'
   }
 
-  if (!values.contents || !values.contents.trim()) {
+  if (values.typE_ID?.name === 'NEW' && (!values.contents || !values.contents.trim())) {
     errors.contents = 'Vui lòng nhập nội dung'
   }
 

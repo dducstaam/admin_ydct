@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Fade from 'react-reveal/Fade'
 import { Modal } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -70,6 +70,7 @@ const CommonLayout = ({
       <Switch>
         <Route path="/auth" component={AuthLayout} />
         <AdminPrivateRoute path="/admin" component={AdminLayout} />
+        <Redirect to="/auth/login" />
         <Route component={NotFound} />
       </Switch>
       <Modal

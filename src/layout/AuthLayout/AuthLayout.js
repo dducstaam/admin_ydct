@@ -8,8 +8,7 @@ import ForgotPassword from '../../pages/ForgotPassword'
 import Login from '../../pages/Login'
 import classes from './AuthLayout.module.scss'
 
-const AuthLayout = (props) => {
-  console.log(props)
+const AuthLayout = () => {
   const { path } = useRouteMatch()
 
   return (

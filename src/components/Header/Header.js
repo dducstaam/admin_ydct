@@ -109,6 +109,16 @@ export default class Header extends Component {
               <Dropdown.Item>
                 <span
                   className={classes.dropdownItem}
+                  onClick={() => {
+                    history.push('/admin/change-password')
+                  }}
+                >
+                  Thay đổi mật khẩu
+                </span>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <span
+                  className={classes.dropdownItem}
                   onClick={this.handleLogout}
                 >
                   <FormattedMessage

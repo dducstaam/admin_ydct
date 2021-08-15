@@ -6,7 +6,7 @@ import * as Api from 'api/api'
 import { connect } from 'react-redux'
 import InputField from 'components/InputField';
 import { showNotification } from 'layout/CommonLayout/actions';
-import { hideEmail } from 'utils/utils';
+// import { hideEmail } from 'utils/utils';
 import classes from './ForgotPassword.module.scss'
 import Button from '../../components/Button';
 import { validateEmail, validatePhoneNumber } from '../../utils/validators';
@@ -36,19 +36,19 @@ const ForgotPassword = (props) => {
   const [loading, setLoading] = useState(false)
 
   const handleForgotPassword = async (values) => {
-    console.log(values)
+    // console.log(values)
     try {
       setLoading(true)
-      const result = await Api.post({
-        url: '/public/forgot-password',
+      await Api.post({
+        url: '/api/forgot-password',
         data: {
-          username: values.username
+          userName: values.username
         }
       })
       setLoading(false)
       showNotification({
         type: 'SUCCESS',
-        message: `Yêu cầu được gửi thành công. Vui lòng kiểm tra email: ${hideEmail(result.data?.email)} để thay đổi mật khẩu`
+        message: 'Yêu cầu được gửi thành công. Vui lòng kiểm tra email để thay đổi mật khẩu'
       })
     } catch (e) {
       setLoading(false)
@@ -71,9 +71,9 @@ const ForgotPassword = (props) => {
           <Field
             name="username"
             component={InputField}
-            placeholder={messages.email}
+            placeholder="Nhập tên đăng nhập để lấy lại mật khẩu"
             h50
-            label={messages.email}
+            label="Tên đăng nhập"
           />
         </div>
         <div className={classes.actions}>

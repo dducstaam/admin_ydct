@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 import Dropzone from 'react-dropzone-uploader'
+import { getFileName } from 'utils/utils'
 import * as Api from 'api/api'
-import { FileURL } from 'utils/config'
 import { renderField } from '../../Form'
-// import { ServiceUploadUrl } from '../../commons/Config'
+// import { FileURL } from 'utils/config'
 import classes from './DropzoneUploader.module.scss'
+import FileType from './FileType'
 
-export class DropzoneUploader extends Component {
+class DropzoneUploader extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -26,20 +27,25 @@ export class DropzoneUploader extends Component {
 
   getUploadParams = async ({ file }) => {
     const formData = new FormData()
-    formData.append('files', file)
-    this.setState({ uploading: true })
+    formData.append('upload', file)
+    // const size = file.size
     const size = file.size
     const id = this.uuidv4()
+    const { input } = this.props
+    const {
+      value,
+      onChange
+    } = input
+    const valueArr = value || []
     try {
-      const { changeValue } = this.props
-      changeValue([...this.props.value, { id, url: file.name, status: 'UPLOADING' }])
+      onChange([...valueArr, { id, url: file.name, status: 'UPLOADING' }])
+      onChange([...valueArr, { id, url: file.name, status: 'UPLOADING' }])
       const result = await Api.post({
-        url: '/public/upload-compress',
+        url: '/api/Util/uploadImage',
         data: formData,
         options: {
           onUploadProgress: (progressEvent) => {
             const progress = progressEvent.loaded / size
-            // console.log('progress ====>', progress)
             this.setState((prevState) => ({
               ...prevState,
               loading: {
@@ -50,43 +56,48 @@ export class DropzoneUploader extends Component {
           }
         }
       })
-      const newValue = this.props.value.map((item) => {
+
+      const newValue = this.props.input.value.map((item) => {
         if (item.id === id) {
           return {
-            url: result.data.url,
+            ...result,
             status: 'DONE'
           }
         }
         return item
       })
-      changeValue(newValue)
+      onChange(newValue)
     } catch (e) {
-      const newValue = this.props.value.filter((item) => item.id !== id)
-      this.props.changeValue(newValue)
+      console.log('e', e)
+      const newValue = this.props.input.value.filter((item) => item.id !== id)
+      onChange(newValue)
     }
     return {
       // url: `${ServiceUploadUrl}/public/upload-compress`,
     }
   }
 
-  Input = ({ accept, onFiles, files, getFilesFromEvent }) => {
-    const text = files.length > 0 ? 'Thêm tài liệu' : 'Chọn tài liệu'
-    const { value } = this.props
+  Preview = () => {
+    const { input } = this.props
+    const { value } = input
     const { loading } = this.state
     return (
-      <div className={classes.inputComponent}>
+      <div>
         <div className={classes.files}>
           {value && value.map((file, i) => (
             <div key={i} className={classes.fileWrapper}>
               <div className={classes.file}>
-                <a
-                  href={`${FileURL}${file.url}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={classes.fileName}
-                >
-                  {file.url}
-                </a>
+
+                <div className={classNames(classes.left)}>
+                  <div className={classes.imageWrapper}>
+                    {file.url && file.status !== 'UPLOADING'
+                      && <FileType item={file} />}
+
+                  </div>
+                  <p className={classes.fileName}>
+                    {getFileName(file.url)}
+                  </p>
+                </div>
                 <a
                   className={classes.btnClose}
                   onClick={this.handleRemoveDocument(i)}
@@ -109,40 +120,62 @@ export class DropzoneUploader extends Component {
             </div>
           ))}
         </div>
-        <p className={classes.text}>
-          Kéo thả tài liệu vào đây
-        </p>
-        <p className={classes.or}>
-          Hoặc
-        </p>
-        <div className={classes.actions}>
-          <label className="btn btnBlue btnSmall">
-            {text}
-            <input
-              style={{ display: 'none' }}
-              type="file"
-              accept={accept}
-              multiple
-              ref={(inputRef) => this.inputRef = inputRef}
-              onChange={(e) => {
-                getFilesFromEvent(e).then((chosenFiles) => {
-                  onFiles(chosenFiles)
-                  this.inputRef.value = null
-                })
-              }}
-            />
-          </label>
-        </div>
+      </div>
+
+    )
+  }
+
+  Input = ({ accept, onFiles, files, getFilesFromEvent }) => {
+    const text = files.length > 0 ? 'Add Document' : 'Select Document'
+    const { maxFiles, input } = this.props
+    return (
+      <div className={classNames(classes.inputComponent, maxFiles <= input.value.length && classes.pb0)}>
+        { this.Preview()}
+        { (!maxFiles || maxFiles > input.value.length)
+          && (
+          <>
+            <p className={classes.text}>
+              Drag and drop image here!
+            </p>
+            <p className={classes.or}>
+              OR
+            </p>
+            <div className={classes.actions}>
+              <label className="btn btnBlue btnSmall">
+                {text}
+                <input
+                  style={{ display: 'none' }}
+                  type="file"
+                  accept={accept}
+                  multiple
+                  onChange={(e) => {
+                    getFilesFromEvent(e).then((chosenFiles) => {
+                      onFiles(chosenFiles)
+                    })
+                  }}
+                />
+              </label>
+            </div>
+          </>
+          )}
+
       </div>
 
     )
   }
 
   handleRemoveDocument = (pos) => () => {
-    const { value, changeValue } = this.props
-    const newValue = value.filter((item, i) => i !== pos)
-    changeValue(newValue)
+    this.dropzoneRef.handleRemove(this.dropzoneRef.files[pos])
+    const { input } = this.props
+    const newValue = input.value.filter((item, i) => i !== pos)
+    input.onChange(newValue)
   }
+
+  Layout = ({ input, dropzoneProps }) => (
+    <div>
+      <div {...dropzoneProps}>{input}</div>
+    </div>
+  )
 
   uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (
@@ -150,18 +183,20 @@ export class DropzoneUploader extends Component {
   }
 
   render() {
-    const { maxFiles = 100, hasError } = this.props
+    const { maxFiles, hasError } = this.props
     return (
       <div className={classNames(classes.container, hasError && 'errorWrapper')}>
         <Dropzone
-          inputContent="Kéo thả tài liệu vào đây"
+          inputContent="Drag and drop image here!"
           InputComponent={this.Input}
+          LayoutComponent={this.Layout}
           getUploadParams={this.getUploadParams}
           multiple
           getFilesFromEvent={this.getFilesFromEvent}
-          PreviewComponent={null}
-          maxFiles={maxFiles || 10}
-          accept=".pdf,.doc,.docx,.xlsx,.xls,image/*"
+          // PreviewComponent={null}
+          maxFiles={maxFiles || 100}
+          accept=".pdf,.doc,.docx,.xlsx,.xls,.pptx,.ppt,image/*,.zip"
+          ref={(ref) => this.dropzoneRef = ref}
         // onChangeStatus={this.handleChangeStatus}
         />
       </div>

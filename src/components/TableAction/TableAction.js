@@ -43,7 +43,7 @@ const TableAction = ({
         && (
         <a
           className="btnRemove"
-          onClick={handleRemove}
+          onClick={() => handleRemove(item)}
         >
           <img
             src={cancelIcon}
@@ -67,7 +67,7 @@ const TableAction = ({
     { handleApprove
         && (
         <ButtonApprove
-          onClick={handleApprove}
+          onClick={() => handleApprove(item)}
           btnStyle={classNames(size === 'lg' && classes.btnLg)}
         />
         )}
@@ -75,7 +75,7 @@ const TableAction = ({
     { handleReject
         && (
         <ButtonReject
-          onClick={handleReject}
+          onClick={() => handleReject(item)}
           btnStyle={classNames(size === 'lg' && classes.btnLg)}
         />
         )}

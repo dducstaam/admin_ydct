@@ -1,10 +1,14 @@
 .menu {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 50px;
   cursor: pointer;
   &:hover {
     background-color: #f5f5f5;
+  }
+  .icon {
+    width: 20px;
+    margin-right: 10px;
   }
   .caretIcon {
     width: 10px;
@@ -12,10 +16,6 @@
   }
   .caretOpen {
     transform: rotate(90deg);
-  }
-  .icon {
-    width: 20px;
-    margin-right: 10px;
   }
   .menuName {
     font-size: 14px;
@@ -27,7 +27,7 @@
 .category {
   display: flex;
   align-items: center;
-  padding: 10px 20px 10px 50px;
+  padding: 10px 20px 10px 80px;
   cursor: pointer;
   &:hover {
     background-color: #f5f5f5;

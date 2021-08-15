@@ -21,7 +21,7 @@ const CategoryForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedCa
       setLoadingSubMenus(true)
 
       const result = await Api.get({
-        url: '/api/Submenu'
+        url: '/api/Submenu/search-status/Y'
       })
 
       let selectedSubMenu = ''
@@ -29,12 +29,12 @@ const CategoryForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedCa
       setSubMenus(result.map((item) => {
         if (selectedCategory && selectedCategory.submenU_ID === item.submenU_ID) {
           selectedSubMenu = {
-            label: item.name,
+            label: item.description,
             value: item.submenU_ID
           }
         }
         return ({
-          label: item.name,
+          label: item.description,
           value: item.submenU_ID
         })
       }))
@@ -93,25 +93,27 @@ const CategoryForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedCa
         <Field
           name="submenU_ID"
           component={SelectField}
-          label="Sub menu"
+          label="Danh mục cha"
           options={subMenus}
           loading={loadingSubMenus}
-        />
-        <Field
-          name="urL_NAME"
-          component={InputField}
-          label="URL"
+          required
         />
         <Field
           name="name"
           component={InputField}
           label="Tên danh mục"
+          required
         />
 
         <Field
           name="desc"
           component={InputField}
           label="Mô tả"
+        />
+        <Field
+          name="urL_NAME"
+          component={InputField}
+          label="URL"
         />
       </div>
       <div className={classes.actions}>
@@ -131,12 +133,12 @@ const CategoryForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedCa
 const validate = (values) => {
   const errors = {}
 
-  if (!values.urL_NAME || !values.urL_NAME.trim()) {
-    errors.userName = 'Vui lòng nhập URL'
+  if (!values.submenU_ID) {
+    errors.submenU_ID = 'Vui lòng chọn danh mục cha'
   }
 
   if (!values.name || !values.name.trim()) {
-    errors.fullName = 'Vui lòng nhập tên danh mục'
+    errors.name = 'Vui lòng nhập tên danh mục'
   }
 
   return errors

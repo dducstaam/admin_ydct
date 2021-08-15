@@ -112,3 +112,5 @@ export function hideEmail(email) {
   const [...dot] = second.split('.').slice(1)
   return `${first.slice(0, 3)}***@***.${dot && dot.join('.')}`
 }
+
+export const getFileName = (url) => url?.split('/').pop()

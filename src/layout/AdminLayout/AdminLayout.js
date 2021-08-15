@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import {
   Switch,
-  useRouteMatch
+  useRouteMatch,
+  Route
 } from 'react-router-dom'
 import AdminPrivateRoute from 'routes/AdminPrivateRoute'
 import Users from 'pages/Admin/Users'
@@ -13,6 +14,7 @@ import ReportNews from 'pages/Admin/ReportNews'
 import ReportNewsByCategory from 'pages/Admin/ReportNewsByCategory'
 import HomeLinks from 'pages/Admin/HomeLinks'
 import CloneLinks from 'pages/Admin/CloneLinks/CloneLinks'
+import ChangePassword from 'pages/Admin/ChangePassword'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import classes from './AdminLayout.module.scss'
@@ -109,13 +111,44 @@ const AdminLayout = (props) => {
           <Switch>
             <AdminPrivateRoute path={`${path}/users`} component={Users} exact />
             <AdminPrivateRoute path={`${path}/categories`} component={Category} exact />
-            <AdminPrivateRoute path={`${path}/news`} component={News} exact />
+            {/* <AdminPrivateRoute path={`${path}/news`} component={News} exact /> */}
+            <Route
+              path={`${path}/news/draft`}
+              render={(props) => (
+                <News {...props} screen="DRAFT" />
+              )}
+            />
+            <Route
+              path={`${path}/news/delete`}
+              render={(props) => (
+                <News {...props} screen="DELETE" />
+              )}
+            />
+            <Route
+              path={`${path}/news/waiting-approve`}
+              render={(props) => (
+                <News {...props} screen="WAITING_APPROVE" />
+              )}
+            />
+            <Route
+              path={`${path}/news/active`}
+              render={(props) => (
+                <News {...props} screen="APPROVED" />
+              )}
+            />
+            <Route
+              path={`${path}/news/reject`}
+              render={(props) => (
+                <News {...props} screen="REJECTED" />
+              )}
+            />
             <AdminPrivateRoute path={`${path}/news/form`} component={NewsForm} exact />
             <AdminPrivateRoute path={`${path}/news/form/:id`} component={NewsForm} />
             <AdminPrivateRoute path={`${path}/report-news`} component={ReportNews} />
             <AdminPrivateRoute path={`${path}/report-news-category`} component={ReportNewsByCategory} />
             <AdminPrivateRoute path={`${path}/home-links`} component={HomeLinks} />
             <AdminPrivateRoute path={`${path}/clone-links`} component={CloneLinks} />
+            <AdminPrivateRoute path={`${path}/change-password`} component={ChangePassword} />
           </Switch>
         </div>
       </div>

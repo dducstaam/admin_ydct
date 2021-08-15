@@ -7,7 +7,7 @@ import InputField from 'components/InputField'
 import SelectField from 'components/SelectField'
 import Button from 'components/Button'
 import * as Api from 'api/api'
-import { validateEmail } from 'utils/validators'
+import { validateEmail, validatePhoneNumber } from 'utils/validators'
 import closeIcon from 'images/close.svg'
 import classes from './UserForm.module.scss'
 
@@ -95,14 +95,22 @@ const UserForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedUser, 
         <Field
           name="role"
           component={SelectField}
-          label="Role"
+          label="Quyền"
           options={roles}
           loading={loadingRoles}
+          required
         />
         <Field
           name="userName"
           component={InputField}
           label="Tên đăng nhập"
+          required
+        />
+        <Field
+          name="fullName"
+          component={InputField}
+          label="Họ và tên"
+          required
         />
         { !(selectedUser
           && selectedUser.id)
@@ -112,19 +120,30 @@ const UserForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedUser, 
             component={InputField}
             label="Mật khẩu"
             type="password"
+            required
           />
           )}
+
+        <Field
+          name="phoneNumber"
+          component={InputField}
+          label="Điện thoại"
+          inputType="number"
+          maxLength={10}
+        />
 
         <Field
           name="email"
           component={InputField}
           label="Email"
         />
+
         <Field
-          name="fullName"
+          name="department"
           component={InputField}
-          label="Họ và tên"
+          label="Phòng ban"
         />
+
       </div>
       <div className={classes.actions}>
         <Button
@@ -151,18 +170,20 @@ const validate = (values) => {
     errors.passWord = 'Vui lòng nhập mật khẩu'
   }
 
-  if (!values.email || !values.email.trim()) {
-    errors.email = 'Vui lòng nhập Email'
-  } else if (!validateEmail(values.email)) {
-    errors.email = 'Vui lòng nhập Email hợp lệ'
-  }
-
   if (!values.fullName || !values.fullName.trim()) {
     errors.fullName = 'Vui lòng nhập Họ tên'
   }
 
   if (!values.role) {
     errors.role = 'Vui lòng chọn role'
+  }
+
+  if (values.email && !validateEmail(values.email)) {
+    errors.email = 'Vui lòng nhập Email hợp lệ'
+  }
+
+  if (values.phoneNumber && !validatePhoneNumber(values.phoneNumber)) {
+    errors.phoneNumber = 'Vui lòng nhập số điện thoại hợp lệ'
   }
 
   return errors

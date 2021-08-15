@@ -130,19 +130,25 @@ const Users = ({ location }) => {
 
   const tableOptions = useMemo(() => [{
     name: 'userName',
-    label: 'Username',
-  }, {
-    name: 'email',
-    label: 'Email',
+    label: 'Tên đăng nhập',
   }, {
     name: 'fullName',
     label: 'Họ tên',
   }, {
+    name: 'phoneNumber',
+    label: 'Số điện thoại',
+  }, {
+    name: 'email',
+    label: 'Email',
+  }, {
+    name: 'department',
+    label: 'Phòng ban',
+  }, {
     name: 'role',
-    label: 'Role',
+    label: 'Quyền',
   }, {
     name: 'status',
-    label: 'Status',
+    label: 'Trạng thái',
     renderCol: (item) => <Status status={item.status} />
   }, {
     type: 'ACTION',

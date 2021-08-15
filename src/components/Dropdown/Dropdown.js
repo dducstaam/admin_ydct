@@ -1,56 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import classNames from 'classnames'
 import classes from './Dropdown.module.scss'
 
 const DropdownComponent = (props) => {
-  const { options, label, handleSearch } = props
+  const [show, setShow] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
+
+  const handleClose = () => {
+    setShow(false)
+  }
+
+  const { componentClass, mainComponent, childrenComponent, customMenu, onToggle } = props
 
   return (
-    <Dropdown>
+    <Dropdown
+      show={show}
+      onToggle={(show) => {
+        setShow(show)
+
+        if (onToggle) {
+          onToggle(show)
+        }
+        // setTimeout(() => {
+
+        // }, 10)
+        setShowMenu(show)
+      }}
+      // drop='start'
+    >
       <Dropdown.Toggle
         variant="success"
         id="dropdown-basic"
         as={React.forwardRef(({ onClick }, ref) => (
           <div
-            className={classes.userName}
+            className={componentClass}
             ref={ref}
             onClick={(e) => {
               e.preventDefault();
               onClick(e);
             }}
           >
-            <span className={classes.label}>
-              { label }
-            </span>
-            <FontAwesomeIcon icon={faCaretDown} className={classes.icon} />
+            { mainComponent }
           </div>
         ))}
       />
-
-      <Dropdown.Menu className={classes.dropdownMenu}>
-        { options.map((option) => (
-          <Dropdown.Item
-            key={option.value}
-            className={classes.dropdownItem}
-          >
-            <span
-              className={classes.optionLabel}
-              onClick={() => {
-                console.log('options', option)
-                const [sort, sortType] = option.value.split('_')
-                handleSearch({
-                  sort,
-                  sortType
-                })
-              }}
-            >
-              { option.label }
-            </span>
-          </Dropdown.Item>
-        )) }
+      <Dropdown.Menu className={classNames(classes.menu, customMenu)}>
+        {showMenu && childrenComponent(handleClose)}
       </Dropdown.Menu>
+
     </Dropdown>
 
   )

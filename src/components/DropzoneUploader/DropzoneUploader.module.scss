@@ -38,6 +38,10 @@
     display: flex;
     align-items: center;
   }
+  .left {
+    display: flex;
+    align-items: center;
+  }
   .percent {
     font-size: 12px;
     font-weight: bold;
@@ -63,7 +67,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    position: relative;
+    .loader {
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
     .fileName {
       font-size: 14px;
       color: #31708e;
@@ -73,6 +83,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
+      margin-left: 10px;
     }
     .times {
       width: 14px;

@@ -29,12 +29,15 @@ const Login = (props) => {
         data: values
       })
 
+      setLoading(false)
+
       localStorage.setItem('accessToken', result.data.token)
       localStorage.setItem('userInfo', JSON.stringify(result.data))
-
-      history.push(redirect || '/admin/users')
-
-      setLoading(false)
+      if (result.data.role === 'Admin') {
+        history.push(redirect || '/admin/users')
+      } else {
+        history.push('/admin/news/waiting-approve')
+      }
     } catch (e) {
       setLoading(false)
     }
