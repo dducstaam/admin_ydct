@@ -106,19 +106,19 @@ const CloneLinks = ({ location }) => {
 
   const tableOptions = useMemo(() => [{
     name: 'avatar',
-    label: 'Image',
+    label: 'Ảnh đại diện',
     renderCol: (item) => (
       <img src={`${FileURL}${item.avatar}`} className={classes.image} alt="img" />
     )
   }, {
     name: 'title',
-    label: 'Title',
+    label: 'Tên đơn vị',
   }, {
     name: 'desc',
     label: 'Mô tả',
   }, {
     name: 'urL_LINK',
-    label: 'URL',
+    label: 'Link liên kết',
   }, {
     name: 'status',
     label: 'Trạng thái',

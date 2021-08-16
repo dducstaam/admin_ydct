@@ -105,7 +105,7 @@ const LinkForm = ({ handleSubmit, handleClose, handlerefreshData, selectedLink, 
             <Field
               name="urL_LINK"
               component={InputField}
-              label="Url link"
+              label="Link"
 
             />
           </div>
@@ -125,7 +125,7 @@ const LinkForm = ({ handleSubmit, handleClose, handlerefreshData, selectedLink, 
           <Field
             name="avatar"
             component={CropImageField}
-            label="Image"
+            label="Ảnh đại diện"
             width={200}
             height={200}
           />
@@ -134,12 +134,12 @@ const LinkForm = ({ handleSubmit, handleClose, handlerefreshData, selectedLink, 
         <Field
           name="title"
           component={InputField}
-          label="Title"
+          label="Tên đơn vị"
         />
         <Field
           name="desc"
           component={InputField}
-          label="Description"
+          label="Mô tả"
         />
       </div>
       <div className={classes.actions}>

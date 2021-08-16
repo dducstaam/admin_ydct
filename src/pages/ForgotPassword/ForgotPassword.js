@@ -9,7 +9,6 @@ import { showNotification } from 'layout/CommonLayout/actions';
 // import { hideEmail } from 'utils/utils';
 import classes from './ForgotPassword.module.scss'
 import Button from '../../components/Button';
-import { validateEmail, validatePhoneNumber } from '../../utils/validators';
 
 const messages = defineMessages({
   email: {
@@ -39,11 +38,8 @@ const ForgotPassword = (props) => {
     // console.log(values)
     try {
       setLoading(true)
-      await Api.post({
-        url: '/api/forgot-password',
-        data: {
-          userName: values.username
-        }
+      await Api.get({
+        url: `/api/UserYte/forgot-password/${values.username}`,
       })
       setLoading(false)
       showNotification({
@@ -108,8 +104,6 @@ const validate = (values) => {
   const errors = {}
   if (!values.username) {
     errors.username = messages.emailEmpty
-  } else if (!validateEmail(values.username) && !validatePhoneNumber(values.username)) {
-    errors.username = messages.emailInvalid
   }
   return errors
 }

@@ -8,6 +8,7 @@ import noteIcon from 'images/sidebar/note2.svg'
 import reportIcon from 'images/sidebar/analytics.svg'
 import boxIcon from 'images/sidebar/box.svg'
 import linkIcon from 'images/link.svg'
+import settingsIcon from 'images/sidebar/settings.svg'
 import ExpandMenus from './ExpandMenus'
 
 import classes from './SideBar.module.scss'
@@ -210,6 +211,29 @@ export default class SideBar extends Component {
                 </div>
                 <span>
                   Thông kê tương tác
+                </span>
+
+              </NavLink>
+
+              <div className={classes.heading}>
+                Cài đặt
+              </div>
+              <div className={classes.divider} />
+
+              <NavLink
+                to="/admin/settings"
+                className={classNames(classes.menuItem)}
+                activeClassName={classes.active}
+              >
+                <div className={classes.iconWrapper}>
+                  <img
+                    src={settingsIcon}
+                    alt="bao-cao.svg"
+                    className={classes.reportIcon}
+                  />
+                </div>
+                <span>
+                  Cài đặt tham số
                 </span>
 
               </NavLink>

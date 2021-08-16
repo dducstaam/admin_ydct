@@ -7,42 +7,35 @@ import { useFilter } from 'hooks/useFilter'
 import AdminPage from 'components/AdminPage'
 import { convertSearchParamsToObject, deleteAccents } from 'utils/utils'
 import * as Api from 'api/api'
-import { FileURL } from 'utils/config'
-import { STATUS, STATUS_OBJ } from 'utils/constants'
 import { useInjectReducer } from '../../../utils/injectReducer'
 import { useInjectSaga } from '../../../utils/injectSaga'
-import classes from './HomeLinks.module.scss'
+import classes from './Settings.module.scss'
 import saga from './saga'
 import {
-  makeSelectHomeLinksData,
+  makeSelectSettingsData,
 } from './selectors'
 import reducer, {
-  getHomeLinks,
+  getSettings,
 } from './slices'
-import LinkForm from './components/LinkForm'
-import Status from '../Users/components/Status'
+import SettingsForm from './components/SettingsForm'
+import ValueCol from './components/ValueCol'
 
 const mapStateToProps = createStructuredSelector({
-  homeLinksData: makeSelectHomeLinksData(),
+  settingsData: makeSelectSettingsData(),
 })
 
 const filterOptions = [{
   type: 'SEARCH',
   name: 'textSearch',
   label: 'Search...'
-}, {
-  type: 'SELECT',
-  name: 'status',
-  label: 'Status',
-  options: STATUS
 }]
 
-const HomeLinks = ({ location }) => {
+const Settings = ({ location }) => {
   /**
    * inject saga và reducer vào hệ thống
    * */
-  useInjectSaga({ key: 'homeLinks', saga })
-  useInjectReducer({ key: 'homeLinks', reducer })
+  useInjectSaga({ key: 'settings', saga })
+  useInjectReducer({ key: 'settings', reducer })
 
   const dispatch = useDispatch()
 
@@ -50,7 +43,6 @@ const HomeLinks = ({ location }) => {
    * state
    */
   const [showForm, setShowForm] = useState(false)
-  const [selectedLink, setSelectedLink] = useState()
 
   /**
    * get data
@@ -60,15 +52,11 @@ const HomeLinks = ({ location }) => {
   }
 
   useEffect(() => {
-    dispatch(getHomeLinks())
+    dispatch(getSettings())
   }, [])
 
   const convertQueryToFilter = (query) => ({
     textSearch: query.textSearch || '',
-    status: query.status && {
-      label: STATUS_OBJ[query.status],
-      value: query.status
-    }
   })
 
   const { filter, handleSearch } = useFilter({
@@ -78,17 +66,17 @@ const HomeLinks = ({ location }) => {
   })
 
   const {
-    homeLinksData,
+    settingsData,
   } = useSelector(mapStateToProps)
 
-  const handleChangeStatus = (active, item) => {
+  const handleRemove = (item) => {
     dispatch(handleShowConfirm({
       title: 'Xác nhận',
-      description: 'Bạn có chắc chắn muốn thay đổi trạng thái link này?',
+      description: 'Bạn có chắc chắn muốn xoá tham số này?',
       handleOk: async () => {
         try {
           await Api.get({
-            url: `/api/WebLink/update-status/${item.websitE_ID}/${active ? 'Y' : 'N'}`,
+            url: `/api/Confugration/delete/${item.confugratioN_ID}`,
           })
 
           handlerefreshData()
@@ -100,55 +88,38 @@ const HomeLinks = ({ location }) => {
   }
 
   const handlerefreshData = () => {
-    dispatch(getHomeLinks())
-  }
-
-  const handleShowEditUser = (item) => {
-    setSelectedLink(item)
-    setShowForm(true)
+    dispatch(getSettings())
   }
 
   const tableOptions = useMemo(() => [{
-    name: 'avatar',
-    label: 'Ảnh đại diện',
-    renderCol: (item) => (
-      <img src={`${FileURL}${item.avatar}`} className={classes.image} alt="img" />
-    )
-  }, {
-    name: 'title',
-    label: 'Tên đơn vị',
+    name: 'confugratioN_CODE',
+    label: 'Mã tham số',
   }, {
     name: 'desc',
-    label: 'Mô tả',
+    label: 'Tên tham số',
   }, {
-    name: 'urL_LINK',
-    label: 'Link liên kết',
-  }, {
-    name: 'status',
-    label: 'Trạng thái',
-    renderCol: (item) => <Status status={item.status} />
+    name: 'value',
+    label: 'Giá trị',
+    renderCol: (item) => <ValueCol item={item} />
   }, {
     type: 'ACTION',
     name: 'action',
-    handleChangeStatus,
-    handleEdit: handleShowEditUser,
-    status: 'Y'
+    handleRemove,
   }], [])
 
   const data = useMemo(() => {
     const params = convertSearchParamsToObject(location.search)
 
-    const newResults = homeLinksData?.results ? homeLinksData.results.filter((item) => (
-      (!params.textSearch || deleteAccents(`${item.title} ${item.desc}`).toLowerCase()
+    const newResults = settingsData?.results ? settingsData.results.filter((item) => (
+      (!params.textSearch || deleteAccents(`${item.confugratioN_CODE} ${item.desc}`).toLowerCase()
         .indexOf(deleteAccents(decodeURI(params.textSearch)).toLowerCase()) !== -1)
-      && (!params.status || item.status === params.status)
     )) : []
 
     return {
-      ...homeLinksData,
+      ...settingsData,
       results: newResults
     }
-  }, [homeLinksData, location.search])
+  }, [settingsData, location.search])
 
   return (
     <div className={classes.container}>
@@ -159,7 +130,6 @@ const HomeLinks = ({ location }) => {
         filterOptions={filterOptions}
         tableOptions={tableOptions}
         handleAddNew={() => {
-          setSelectedLink(null)
           setShowForm(true)
         }}
       />
@@ -169,20 +139,13 @@ const HomeLinks = ({ location }) => {
         onHide={() => setShowForm(false)}
         size="md"
       >
-        <LinkForm
-          initialValues={selectedLink ? {
-            ...selectedLink,
-            avatar: {
-              url: selectedLink.avatar
-            }
-          } : {}}
+        <SettingsForm
           handleClose={() => setShowForm(false)}
           handlerefreshData={handlerefreshData}
-          selectedLink={selectedLink}
         />
       </Modal>
     </div>
   )
 }
 
-export default HomeLinks
+export default Settings

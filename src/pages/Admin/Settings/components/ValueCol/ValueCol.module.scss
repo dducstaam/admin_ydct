@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  align-items: center;
+  .input {
+    flex: 1;
+    height: 40px;
+    box-shadow: none !important;
+    height: 40px;
+    border-radius: 4px 0 0 4px;
+    border: solid 1px #BFC7CA;
+    background-color: #ffffff;
+    font-size: 16px;
+    color: #092631;
+    outline: 0;
+    padding: 0 15px;
+    width: 100%;
+  }
+  .btn {
+    border-radius: 0 4px 4px 0;
+  }
+  .customLoader {
+    position: absolute;
+    right: 0;
+  }
+  
+}
+
+.btnEdit {
+  margin-left: 10px;
+  .editIcon {
+    width: 15px;
+  }
+}
+
+.valueWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnClose {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dddddd;
+  .closeIcon {
+    width: 14px;
+  }
+  &:hover {
+    background-color: #cccccc;
+  }
+}

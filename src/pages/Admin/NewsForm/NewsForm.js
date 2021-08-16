@@ -13,6 +13,7 @@ import DatePickerField from 'components/DatePickerField'
 import moment from 'moment'
 import history from 'utils/history'
 import { showNotification } from 'layout/CommonLayout/actions'
+import { CropImageField } from 'components/CropImageField/CropImageField'
 import classes from './NewsForm.module.scss'
 import SelectCategories from './SelectCategories'
 
@@ -61,6 +62,7 @@ const NewsForm = ({ match, handleSubmit, change }) => {
         const result = await Api.get({
           url: `/api/News/${match.params?.id}`
         })
+        change('avatar', { url: result.data.avatar })
         change('categories', result.data.categories)
         change('titlE_CODE', result.data.titlE_CODE)
         change('title', result.data.title)
@@ -104,7 +106,8 @@ const NewsForm = ({ match, handleSubmit, change }) => {
             iS_HOST: values.iS_HOST ? 'Y' : 'N',
             alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
             issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
-            status: values.status || 'Submit'
+            status: values.status || 'Submit',
+            avatar: values.avatar?.url
           }
         })
         dispatch(showNotification({
@@ -124,7 +127,8 @@ const NewsForm = ({ match, handleSubmit, change }) => {
             iS_HOST: values.iS_HOST ? 'Y' : 'N',
             alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
             issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
-            status: values.status || 'Submit'
+            status: values.status || 'Submit',
+            avatar: values.avatar?.url
           }
         })
 
@@ -157,6 +161,13 @@ const NewsForm = ({ match, handleSubmit, change }) => {
           { match.params?.id ? 'Cập nhật bài báo' : 'Tạo bài báo' }
         </div>
         <div className={classes.content}>
+          <Field
+            name="avatar"
+            label="Ảnh đại diện"
+            component={CropImageField}
+            width={480}
+            height={320}
+          />
           <Field
             name="typE_ID"
             label="Loại bài viết"

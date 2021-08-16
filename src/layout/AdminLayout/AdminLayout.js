@@ -15,6 +15,7 @@ import ReportNewsByCategory from 'pages/Admin/ReportNewsByCategory'
 import HomeLinks from 'pages/Admin/HomeLinks'
 import CloneLinks from 'pages/Admin/CloneLinks/CloneLinks'
 import ChangePassword from 'pages/Admin/ChangePassword'
+import Settings from 'pages/Admin/Settings'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import classes from './AdminLayout.module.scss'
@@ -149,6 +150,7 @@ const AdminLayout = (props) => {
             <AdminPrivateRoute path={`${path}/home-links`} component={HomeLinks} />
             <AdminPrivateRoute path={`${path}/clone-links`} component={CloneLinks} />
             <AdminPrivateRoute path={`${path}/change-password`} component={ChangePassword} />
+            <AdminPrivateRoute path={`${path}/settings`} component={Settings} />
           </Switch>
         </div>
       </div>

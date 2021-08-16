@@ -37,9 +37,9 @@ const ChangePassword = (props) => {
     try {
       setLoading(true)
       await Api.post({
-        url: '/api/reset-password',
+        url: '/api/UserYte/reset-password',
         data: {
-          ...values,
+          passWord: values.newPassword,
           token: match.params?.token
         }
       })
