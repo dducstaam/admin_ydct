@@ -71,10 +71,6 @@ const NewsForm = ({ match, handleSubmit, change }) => {
         change('issuE_DATE', result.data.issuE_DATE && moment(result.data.issuE_DATE).format('DD/MM/YYYY'))
         change('iS_HOST', result.data.iS_HOST === 'Y')
         change('alloW_COMMENT', result.data.alloW_COMMENT === 'Y')
-        change('documentAttacks', result.data.documentAttacks && result.data.documentAttacks.map((item) => ({
-          url: item.documenT_LINK,
-          fileName: item.documenT_NAME
-        })))
 
         setDetail(result.data)
       }
@@ -85,7 +81,16 @@ const NewsForm = ({ match, handleSubmit, change }) => {
 
   useEffect(() => {
     if (detail && types && types.length > 0) {
-      change('typE_ID', types.find((item) => item.value === detail.typE_ID))
+      const type = types.find((item) => item.value === detail.typE_ID)
+      change('typE_ID', type)
+      if (type.name === 'VIDEO') {
+        change('youtubeURL', detail.documentAttacks[0]?.documenT_LINK)
+      } else {
+        change('documentAttacks', detail.documentAttacks && detail.documentAttacks.map((item) => ({
+          url: item.documenT_LINK,
+          fileName: item.documenT_NAME
+        })))
+      }
     }
   }, [detail, types])
 
@@ -99,10 +104,15 @@ const NewsForm = ({ match, handleSubmit, change }) => {
             ...values,
             newS_ID: +match.params?.id,
             typE_ID: values.typE_ID?.value,
-            documentAttacks: values.documentAttacks && values.documentAttacks.map((item) => ({
-              documenT_LINK: item.url,
-              documenT_NAME: item.fileName
-            })),
+            documentAttacks: values.typE_ID?.name === 'VIDEO'
+              ? [{
+                documenT_LINK: values.youtubeURL,
+                documenT_NAME: 'youtube link'
+              }]
+              : (values.documentAttacks && values.documentAttacks.map((item) => ({
+                documenT_LINK: item.url,
+                documenT_NAME: item.fileName
+              }))),
             iS_HOST: values.iS_HOST ? 'Y' : 'N',
             alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
             issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
@@ -120,10 +130,15 @@ const NewsForm = ({ match, handleSubmit, change }) => {
           data: {
             ...values,
             typE_ID: values.typE_ID?.value,
-            documentAttacks: values.documentAttacks && values.documentAttacks.map((item) => ({
-              documenT_LINK: item.url,
-              documenT_NAME: item.fileName
-            })),
+            documentAttacks: values.typE_ID?.name === 'VIDEO'
+              ? [{
+                documenT_LINK: values.youtubeURL,
+                documenT_NAME: 'youtube link'
+              }]
+              : (values.documentAttacks && values.documentAttacks.map((item) => ({
+                documenT_LINK: item.url,
+                documenT_NAME: item.fileName
+              }))),
             iS_HOST: values.iS_HOST ? 'Y' : 'N',
             alloW_COMMENT: values.alloW_COMMENT ? 'Y' : 'N',
             issuE_DATE: moment(values.issuE_DATE, 'DD/MM/YYYY').toDate(),
@@ -180,11 +195,18 @@ const NewsForm = ({ match, handleSubmit, change }) => {
             label="Danh mục"
             component={SelectCategories}
           />
-          <Field
-            name="titlE_CODE"
-            component={InputField}
-            label="Mã bài viết"
-          />
+          {
+            formState.typE_ID?.name !== 'NEW'
+            && formState.typE_ID?.name !== 'VIDEO'
+            && (
+            <Field
+              name="titlE_CODE"
+              component={InputField}
+              label="Mã bài viết"
+            />
+            )
+          }
+
           <Field
             name="title"
             component={InputField}
@@ -223,13 +245,22 @@ const NewsForm = ({ match, handleSubmit, change }) => {
             component={SwitchField}
             label="Được bình luận"
           />
-          { (formState.typE_ID?.name === 'VIDEO' || formState.typE_ID?.name === 'DOCUMENT')
+          { (formState.typE_ID?.name === 'DOCUMENT')
             && (
             <Field
               name="documentAttacks"
               component={DropzoneUploader}
               label="Tài liệu"
             />
+            )}
+          { formState.typE_ID?.name === 'VIDEO'
+            && (
+              <Field
+                name="youtubeURL"
+                component={InputField}
+                label="Link youtube"
+                placeholder="Nhập link youtube"
+              />
             )}
 
         </div>
@@ -294,6 +325,14 @@ const validate = (values) => {
 
   if (values.typE_ID?.name === 'NEW' && (!values.contents || !values.contents.trim())) {
     errors.contents = 'Vui lòng nhập nội dung'
+  }
+
+  if (values.typE_ID?.name === 'VIDEO' && !values.youtubeURL) {
+    errors.youtubeURL = 'Vui lòng link youtube'
+  }
+
+  if (values.typE_ID?.name === 'DOCUMENT' && !values.issuE_DATE) {
+    errors.issuE_DATE = 'Vui lòng chọn ngày ban hành'
   }
 
   return errors

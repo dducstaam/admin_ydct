@@ -15,6 +15,7 @@ const instance = axios.create({
 })
 
 const handleError = async (error, hideError) => {
+  console.log('error', error)
   const hideErrorNoti = hideError
   const lang = 'vi'
   const errorMessages = {
@@ -45,9 +46,6 @@ const handleError = async (error, hideError) => {
   if (error.response && (error.response.status === 401 || error.response.status === 403 || error.response.data.code === 401)) {
     errorMessage = errorMessages.sessionExprire[lang]
     localStorage.clear()
-    get({
-      url: '/public/csrf',
-    })
     history.push('/auth/login')
   }
   if (!hideErrorNoti) {
@@ -83,7 +81,18 @@ const sendRequest = async ({ url, method, params, data, headers, options, hideEr
       ...headers
     },
     ...options
-  }).then((response) => response.data)
+  }).then((response) => {
+    if (response.data.status && +response.data.status > 300) {
+      throw ({
+        response: {
+          data: {
+            message: response.data.description
+          }
+        }
+      })
+    }
+    return response.data
+  })
     .catch((error) => handleError(error, hideError, () => sendRequest({ url,
       method,
       params,

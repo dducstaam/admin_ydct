@@ -54,13 +54,17 @@ const CategoryForm = ({ handleSubmit, handleClose, handleRefreshUser, selectedCa
       if (values.categorY_ID) {
         await Api.post({
           url: `/api/Category/update/${values.categorY_ID}`,
-          data: values
+          data: {
+            ...values,
+            submenU_ID: values.submenU_ID?.value,
+          }
         })
       } else {
         await Api.post({
           url: '/api/Category',
           data: {
             ...values,
+            submenU_ID: values.submenU_ID?.value,
             status: 'Y'
           }
         })

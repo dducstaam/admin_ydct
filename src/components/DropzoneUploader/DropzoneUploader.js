@@ -61,6 +61,7 @@ class DropzoneUploader extends Component {
         if (item.id === id) {
           return {
             ...result,
+            fileName: file.name,
             status: 'DONE'
           }
         }
